@@ -10,29 +10,7 @@ import warnings
 
 warnings.filterwarnings('ignore')
 
-# Define the PyTorch Multimodal CNN architecture
-class MultimodalNet(nn.Module):
-    def __init__(self):
-        super(MultimodalNet, self).__init__()
-        self.tab_fc = nn.Sequential(nn.Linear(21, 16), nn.ReLU())
-        self.aud_fc = nn.Sequential(nn.Linear(13, 16), nn.ReLU())
-        
-        self.cnn = nn.Sequential(
-            nn.Conv2d(1, 16, kernel_size=3, padding=1), nn.ReLU(), nn.MaxPool2d(2),
-            nn.Conv2d(16, 32, kernel_size=3, padding=1), nn.ReLU(), nn.MaxPool2d(2),
-            nn.Flatten(), nn.Linear(32 * 8 * 8, 64), nn.ReLU()
-        )
-        
-        self.fusion = nn.Sequential(
-            nn.Linear(96, 64), nn.ReLU(), nn.Dropout(0.4), nn.Linear(64, 4)
-        )
-
-    def forward(self, tab, aud, img):
-        tab_out = self.tab_fc(tab)
-        aud_out = self.aud_fc(aud)
-        img_out = self.cnn(img)
-        merged = torch.cat((tab_out, aud_out, img_out), dim=1)
-        return self.fusion(merged)
+from model_def import MultimodalNet
 
 # Load models at startup
 print("Loading CNN model artifacts for GUI...")
