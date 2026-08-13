@@ -12,6 +12,7 @@ from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import warnings
+import joblib
 
 # Suppress warnings for cleaner output
 warnings.filterwarnings('ignore')
@@ -64,6 +65,11 @@ def main():
         print(f"  Precision: {prec:.4f}")
         print(f"  Recall:    {rec:.4f}")
         print(f"  F1-Score:  {f1:.4f}")
+        
+        # Save XGBoost for the GUI
+        if name == 'XGBoost Classifier':
+            print("  [Saving XGBoost model to disk for GUI...]")
+            joblib.dump(model, 'xgb_model.pkl')
 
     # 5. Conclusion Output
     # Programmatically determine the highest-scoring model based on F1-Score

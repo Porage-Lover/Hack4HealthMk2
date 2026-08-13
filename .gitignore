@@ -3,3 +3,4 @@ drive-download*/
 *.csv
 __pycache__/
 .DS_Store
+archive/

@@ -16,6 +16,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.impute import SimpleImputer
 import warnings
+import joblib
 
 # Suppress librosa load warnings for cleaner output
 warnings.filterwarnings('ignore')
@@ -132,6 +133,11 @@ def main():
     np.save('X_test_mega.npy', X_test_scaled)
     np.save('y_train_mega.npy', y_train)
     np.save('y_test_mega.npy', y_test)
+
+    print("Saving preprocessor objects for GUI deployment...")
+    joblib.dump(imputer, 'imputer.pkl')
+    joblib.dump(scaler, 'scaler.pkl')
+    joblib.dump(le, 'label_encoder.pkl')
 
     print("\n--- Multimodal Preprocessing Complete ---")
     print(f"X_train_mega shape: {X_train_scaled.shape}")
